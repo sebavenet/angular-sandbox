@@ -1,14 +1,10 @@
 <div style="text-align:center">
-  <!-- One-way binding: property (to-the-dom) -->
   <img width="100" alt="property as one-way binding" [src]="image">
-  <!-- One-way binding: interpolation (to-the-dom) -->
   <h2>{{ user.firstname }} {{ user.lastname }} Details: </h2>
   <div><span>id: </span>{{ user.id }}</div>
   <div><span>email: </span>{{ user.email }}</div>
   <div><span>birth date: </span>{{ user.birthdate }}</div>
-  <div><span>birth date (date pipe): </span>{{ user.birthdate | date }}</div>
-  <div><span>birth date (fixed date format): </span>{{ user.birthdate | date: "MM/dd/yy" }}</div>
-  <div><span>birth date (dynamic date format): </span>{{ user.birthdate | date: dateFormat }}</div>
-  <div><span>birth date (date + uppercase pipes): </span>{{ user.birthdate | date | uppercase }}</div>
-  <div>Exponentielle: {{ 2 | exponential: 10 }}</div>
+  <div style="margin: 2% 5% 0 5%;display:inline-block;">
+    <input #testInputFocus type="text" placeholder="Test input for auto-focus">
+  </div>
 </div>
