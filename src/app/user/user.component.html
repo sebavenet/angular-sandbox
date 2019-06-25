@@ -7,6 +7,14 @@
         (click)="onSelect(user)">
         <span>{{user.id}} - {{user.firstname}} {{user.lastname}} </span>
       </li>
+      <hr>
+      <span *ngIf="!usersAsync">Waiting for usersAsync...</span>
+      <ul>
+        <li *ngFor="let user of usersAsync" [class.active-line]="selectedUser && selectedUser.id === user.id"
+          (click)="onSelect(user)">
+          <span>{{user.id}} - {{user.firstname}} {{user.lastname}}</span>
+        </li>
+      </ul>
     </ul>
   </div>
   <div class="col m8" *ngIf="selectedUser">

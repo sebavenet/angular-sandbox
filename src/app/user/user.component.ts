@@ -1,44 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './user';
-
-export const USERS: User[] = [
-  {
-    id: 1,
-    username: 'test',
-    password: 'pa$$word',
-    email: 'mehdi.mecheri@viveris.fr',
-    firstname: 'Mehdi',
-    lastname: 'Mecheri',
-    birthdate: new Date(2018, 5, 22)
-  },
-  {
-    id: 2,
-    username: 'test',
-    password: 'pa$$word',
-    email: 'lionel.messi@barca.es',
-    firstname: 'Lionel',
-    lastname: 'Messi',
-    birthdate: new Date(2018, 5, 22)
-  },
-  {
-    id: 3,
-    username: 'test',
-    password: 'pa$$word',
-    email: 'cristiano.ronaldo@real.es',
-    firstname: 'Cristiano',
-    lastname: 'Ronaldo',
-    birthdate: new Date(2018, 5, 22)
-  },
-  {
-    id: 4,
-    username: 'test',
-    password: 'pa$$word',
-    email: 'neymar.jr@psg.fr',
-    firstname: 'Neymar',
-    lastname: 'JR',
-    birthdate: new Date(2018, 5, 22)
-  }
-];
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user',
@@ -48,17 +10,39 @@ export const USERS: User[] = [
 export class UserComponent implements OnInit {
 
   users: User[];
+  usersAsync: User[];
   selectedUser: User;
 
   image = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f471-1f3fb.png';
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.users = USERS;
+    this.loadUsers();
+    this.loadUsersAsync();
   }
 
+  ngOnDestroy() { }
+
   onSelect(user: User): void {
-    this.selectedUser = user;
+    this.selectedUser = JSON.parse(JSON.stringify(user));
+  }
+
+  loadUsers() {
+    this.users = this.userService.getUsers();
+  }
+
+  loadUsersAsync() {
+    this.userService.getUsersAsync()
+      .subscribe(
+        (data: User[]) => {
+          console.log('request returned some data')
+          this.usersAsync = data
+        },
+        (err) => console.error(err),
+        () => {
+          console.log('request complete')
+        }
+      )
   }
 }
