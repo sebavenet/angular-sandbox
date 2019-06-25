@@ -3,19 +3,17 @@
 <div class="row">
   <div class="col m4">
     <ul>
-      <li *ngFor="let user of users" [class.active-line]="selectedUser && selectedUser.id === user.id" (click)="onSelect(user)">
-        <span appHighlight>{{ user.id }} - {{ user.firstname }} {{ user.lastname }}</span>
+      <li *ngFor="let user of users" [class.active-line]="selectedUser && selectedUser.id === user.id"
+        (click)="onSelect(user)">
+        <span appHighlight>{{ user.id }} - {{ user.firstname }} {{ user.lastname }} </span>
       </li>
     </ul>
+    <button (click)="broadcastParent()">BROADCAST PARENT</button>
   </div>
   <div class="col m8" *ngIf="selectedUser">
-    <!-- TODO: Display selected user -->
-    <br>
-    <img width="100" alt="property as one-way binding" [src]="image">
-    <h4>{{ selectedUser.firstname }} {{ selectedUser.lastname }} Details: </h4>
-    <div><span>id: </span>{{ selectedUser.id }}</div>
-    <input type="text" [(ngModel)]="selectedUser.firstname" [appInputMaxLength]="30">
-    <input type="text" [(ngModel)]="selectedUser.lastname" [appInputMaxLength]="30">
-    <input type="text" [(ngModel)]="selectedUser.email" [appInputMaxLength]="30">
+    <!-- user detail tag -->
+    <app-user-detail #myUserDetail [user]="selectedUser" [avatar]="image" [avatar2]="image2"
+      (onAction)="onActionFromUserDetail($event)"></app-user-detail>
+    <span>{{ myUserDetail.hello }}</span>
   </div>
 </div>

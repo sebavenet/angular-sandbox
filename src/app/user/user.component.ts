@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from './user';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { ParentChildInteractionService } from '../parent-child-interaction.service';
+import { Subscription } from 'rxjs';
 
 export const USERS: User[] = [
   {
@@ -46,17 +49,42 @@ export const USERS: User[] = [
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+
   image = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f471-1f3fb.png';
+  image2 = '               https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f471-1f3fb.png';
   users: User[];
   selectedUser: User;
 
-  constructor() { }
+  @ViewChild(UserDetailComponent, null) ud: UserDetailComponent;
+
+  subscription: Subscription;
+
+  constructor(private service: ParentChildInteractionService) {
+    this.subscription = service.broadcastChildStream$.subscribe((messageFromChild: string) => console.log(messageFromChild));
+  }
 
   ngOnInit() {
     this.users = USERS;
   }
 
+  ngOnDestroy() {
+    // do no forget to implement OnDestroy interface
+    this.subscription.unsubscribe(); // prevent memory leak
+  }
+
   onSelect(user: User): void {
     this.selectedUser = user;
+    if (this.ud) {
+      console.log(this.ud.hello);
+    }
   }
+
+  onActionFromUserDetail(msg: string) {
+    alert(msg);
+  }
+
+  broadcastParent() {
+    this.service.broadcastParent('Hello from parent');
+  }
+
 }
