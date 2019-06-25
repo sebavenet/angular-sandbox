@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { User } from './user';
 
@@ -48,24 +48,11 @@ export const USERS: User[] = [
 export class UserService {
   constructor() { }
 
-  getUsers(): User[] {
-    return USERS;
+  getUsers(): Observable<User[]> {
+    return of(USERS);
   }
 
-  // The UserService must wait for the server to respond
-  // getUsers() cannot return immediately with data,
-  // and the browser will not block while the service waits
-  getUsersAsync(): Observable<User[]> {
-    return new Observable((observer) => {
-      setTimeout(() => {
-        observer.next(USERS);
-        observer.complete();
-      }, 2000);
-
-      try {
-      } catch (e) {
-        observer.error(e);
-      }
-    });
+  getUser(id: number): Observable<User> {
+    return of(USERS.find(u => u.id === id))
   }
 }

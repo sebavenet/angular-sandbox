@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { User } from './user';
 import { UserService } from './user.service';
 
@@ -8,41 +10,42 @@ import { UserService } from './user.service';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-
   users: User[];
-  usersAsync: User[];
   selectedUser: User;
 
-  image = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f471-1f3fb.png';
+  bcItems = [
+    { label: 'Home', routerLink: '/home', icon: 'pi pi-home' },
+    { label: 'Users', }
+  ];
 
-  constructor(private userService: UserService) { }
+  cols = [
+    { field: 'id', header: 'ID' },
+    { field: 'firstname', header: 'First Name' },
+    { field: 'lastname', header: 'Last Name' }
+  ];
+
+  constructor(
+    private router: Router,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
-    this.loadUsers();
-    this.loadUsersAsync();
+    this.getUsers();
   }
-
-  ngOnDestroy() { }
 
   onSelect(user: User): void {
-    this.selectedUser = JSON.parse(JSON.stringify(user));
+    this.selectedUser = user;
   }
 
-  loadUsers() {
-    this.users = this.userService.getUsers();
-  }
-
-  loadUsersAsync() {
-    this.userService.getUsersAsync()
+  getUsers() {
+    this.userService.getUsers()
       .subscribe(
-        (data: User[]) => {
-          console.log('request returned some data')
-          this.usersAsync = data
-        },
-        (err) => console.error(err),
-        () => {
-          console.log('request complete')
-        }
-      )
+        (data: User[]) => this.users = data,
+        (error) => console.log(error)
+      );
+  }
+
+  detail(user: User) {
+    this.router.navigate(['user', user.id]);
   }
 }
