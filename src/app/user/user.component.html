@@ -4,7 +4,12 @@
   <div><span>id: </span>{{ user.id }}</div>
   <div><span>email: </span>{{ user.email }}</div>
   <div><span>birth date: </span>{{ user.birthdate }}</div>
+
   <div style="margin: 2% 5% 0 5%;display:inline-block;">
     <input #testInputFocus type="text" placeholder="Test input for auto-focus">
+    <!-- Two-way binding -->
+    <input type="text" [(ngModel)]="user.firstname">
+    <input type="text" [(ngModel)]="user.lastname">
+    <input type="text" [(ngModel)]="user.email">
   </div>
 </div>
