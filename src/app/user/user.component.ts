@@ -12,6 +12,8 @@ import { UserService } from './user.service';
 export class UserComponent implements OnInit {
   users: User[];
   selectedUser: User;
+  userToDelete: User;
+  displayDeleteModal: boolean = false;
 
   bcItems = [
     { label: 'Home', routerLink: '/home', icon: 'pi pi-home' },
@@ -47,5 +49,25 @@ export class UserComponent implements OnInit {
 
   detail(user: User) {
     this.router.navigate(['user', user.id]);
+  }
+
+  add() {
+    this.router.navigate(['user', 'add', 'new']);
+  }
+
+  edit(user: User) {
+    this.router.navigate(['user', 'edit', user.id]);
+  }
+
+  showDeleteModal(user: User) {
+    this.userToDelete = user;
+    this.displayDeleteModal = true;
+  }
+
+  onActionDelete(del: boolean) {
+    this.displayDeleteModal = false;
+    if (del) {
+      this.getUsers();
+    }
   }
 }
