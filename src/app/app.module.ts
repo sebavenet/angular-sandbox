@@ -1,17 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { NotifierModule } from 'angular-notifier';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from './core/core.module';
+import { AppRoutingModule } from './app-routing.module';
 
 import { MzNavbarModule, MzInputModule, MzButtonModule, MzValidationModule, MzSpinnerModule } from 'ngx-materialize';
-
 import { TableModule } from 'primeng/table';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DialogModule } from 'primeng/dialog';
-
-import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
@@ -35,10 +32,10 @@ import { UserDeleteComponent } from './user/user-delete/user-delete.component';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CoreModule,
     AppRoutingModule,
     MzNavbarModule,
     MzInputModule,
@@ -48,16 +45,6 @@ import { UserDeleteComponent } from './user/user-delete/user-delete.component';
     TableModule,
     BreadcrumbModule,
     DialogModule,
-    NotifierModule.withConfig({
-      position: {
-        horizontal: {
-          position: 'right'
-        },
-        vertical: {
-          distance: 35
-        }
-      }
-    })
   ],
   providers: [],
   bootstrap: [AppComponent]

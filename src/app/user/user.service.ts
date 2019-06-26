@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { User } from './user';
+import { SettingsService } from '../core/services/settings.service';
 
 export const USERS: User[] = [
   {
@@ -49,11 +50,14 @@ export const USERS: User[] = [
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private settingsService: SettingsService
+  ) { }
 
   getUsers(): Observable<User[]> {
     return this.http
-      .get(`https://aspnetcoreapistarter.azurewebsites.net/api/User`)
+      .get(`${this.settingsService.config.apiUrl}/api/User`)
       .pipe(
         map((resp) => resp as User[]),
         catchError(this.handleError)
@@ -62,7 +66,7 @@ export class UserService {
 
   getUser(id: number): Observable<User> {
     return this.http
-      .get(`https://aspnetcoreapistarter.azurewebsites.net/api/User/${id}`)
+      .get(`${this.settingsService.config.apiUrl}/api/User/${id}`)
       .pipe(
         map((resp) => resp as User),
         catchError(this.handleError)
@@ -71,19 +75,19 @@ export class UserService {
 
   createUser(user: User): Observable<any> {
     return this.http
-      .post(`https://aspnetcoreapistarter.azurewebsites.net/api/User`, user)
+      .post(`${this.settingsService.config.apiUrl}/api/User`, user)
       .pipe(catchError(this.handleError))
   }
 
   updateUser(user: User): Observable<any> {
     return this.http
-      .put(`https://aspnetcoreapistarter.azurewebsites.net/api/User/${user.id}`, user)
+      .put(`${this.settingsService.config.apiUrl}/api/User/${user.id}`, user)
       .pipe(catchError(this.handleError))
   }
 
   deleteUser(id: number): Observable<any> {
     return this.http
-      .delete(`https://aspnetcoreapistarter.azurewebsites.net/api/User/${id}`)
+      .delete(`${this.settingsService.config.apiUrl}/api/User/${id}`)
       .pipe(catchError(this.handleError))
   }
 

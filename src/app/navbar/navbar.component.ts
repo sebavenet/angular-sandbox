@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ResourcesService } from '../core/services/resources.service';
 
 export interface IMenuItem {
   name: string,
@@ -15,26 +16,13 @@ export interface IMenuItem {
 export class NavbarComponent implements OnInit {
   items: IMenuItem[];
 
-  constructor() { }
+  constructor(private resourcesService: ResourcesService) { }
 
   ngOnInit() {
     this.initItems();
   }
 
   initItems() {
-    this.items = [
-      {
-        name: 'Home',
-        id: 'home',
-        class: '',
-        url: '/home',
-      },
-      {
-        name: 'Users',
-        id: 'user',
-        class: '',
-        url: '/user',
-      }
-    ];
+    this.items = this.resourcesService.rsc.navbar.items;
   }
 }
