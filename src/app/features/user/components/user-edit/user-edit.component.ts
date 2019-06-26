@@ -3,8 +3,8 @@ import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 
-import { User } from '../../user/user';
-import { UserService } from '../../user/user.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-edit',

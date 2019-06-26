@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators, Valid
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 
-import { UserService } from './../../user/user.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-new',
