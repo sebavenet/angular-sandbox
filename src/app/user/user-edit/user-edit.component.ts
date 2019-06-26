@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 
 import { User } from '../../user/user';
 import { UserService } from '../../user/user.service';
@@ -43,7 +44,8 @@ export class UserEditComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private notifier: NotifierService
   ) { }
 
   ngOnInit() {
@@ -53,10 +55,14 @@ export class UserEditComponent implements OnInit {
 
   getUser(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.userService.getUser(id).subscribe(user => {
-      this.user = user;
-      this.editForm.patchValue(this.user);
-    });
+    this.userService.getUser(id)
+      .subscribe(
+        user => {
+          this.user = user;
+          this.editForm.patchValue(this.user);
+        },
+        error => this.notifier.notify('error', error)
+      );
   }
 
   createForm() {
@@ -67,7 +73,7 @@ export class UserEditComponent implements OnInit {
       password: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+      lastname: ['', Validators.required]
     });
   }
 
@@ -76,6 +82,13 @@ export class UserEditComponent implements OnInit {
   }
 
   save() {
-    // TODO: call injected userService to save data via http call
+    this.userService.updateUser(this.editForm.value)
+      .subscribe(
+        resp => {
+          this.notifier.notify('success', 'Operation successfully done!');
+          this.router.navigate(['user', resp.id]);
+        },
+        error => this.notifier.notify('error', error)
+      );
   }
 }

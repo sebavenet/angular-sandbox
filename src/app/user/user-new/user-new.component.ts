@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 
 import { UserService } from './../../user/user.service';
 
@@ -41,7 +42,8 @@ export class UserNewComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private notifier: NotifierService
   ) { }
 
   ngOnInit() {
@@ -64,7 +66,14 @@ export class UserNewComponent implements OnInit {
   }
 
   save() {
-    // TODO: call injected userService to save data via http call
+    this.userService.createUser(this.newForm.value)
+      .subscribe(
+        resp => {
+          this.notifier.notify('success', 'Operation successfully done!');
+          this.router.navigate(['user', resp.id]);
+        },
+        error => this.notifier.notify('error', error)
+      );
   }
 }
 

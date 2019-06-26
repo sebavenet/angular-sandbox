@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NotifierModule } from 'angular-notifier';
 
 import { MzNavbarModule, MzInputModule, MzButtonModule, MzValidationModule, MzSpinnerModule } from 'ngx-materialize';
 
@@ -35,6 +37,7 @@ import { UserDeleteComponent } from './user/user-delete/user-delete.component';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
     MzNavbarModule,
@@ -44,7 +47,17 @@ import { UserDeleteComponent } from './user/user-delete/user-delete.component';
     MzSpinnerModule,
     TableModule,
     BreadcrumbModule,
-    DialogModule
+    DialogModule,
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          position: 'right'
+        },
+        vertical: {
+          distance: 35
+        }
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

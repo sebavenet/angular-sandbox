@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 
 import { User } from './user';
 import { UserService } from './user.service';
@@ -28,7 +29,8 @@ export class UserComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private notifier: NotifierService
   ) { }
 
   ngOnInit() {
@@ -43,7 +45,7 @@ export class UserComponent implements OnInit {
     this.userService.getUsers()
       .subscribe(
         (data: User[]) => this.users = data,
-        (error) => console.log(error)
+        (error) => this.notifier.notify('error', error)
       );
   }
 

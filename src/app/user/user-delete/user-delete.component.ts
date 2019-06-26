@@ -1,4 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
+
 import { User } from '../user';
 import { UserService } from '../user.service';
 
@@ -12,7 +14,10 @@ export class UserDeleteComponent implements OnInit {
   @Input() display: boolean;
   @Output() onAction = new EventEmitter<boolean>();
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private notifier: NotifierService
+  ) { }
 
   ngOnInit() { }
 
@@ -21,6 +26,13 @@ export class UserDeleteComponent implements OnInit {
   }
 
   delete() {
-    this.onAction.emit(true);
+    this.userService.deleteUser(this.user.id)
+      .subscribe(
+        resp => {
+          this.notifier.notify('success', 'Operation successfully done!');
+          this.onAction.emit(true);
+        },
+        error => this.notifier.notify('error', error)
+      );
   }
 }
