@@ -15,6 +15,11 @@
             }
         ]
     },
+    footer: {
+        year: 2019
+        appName: My Great Project
+        author: S.Avenet
+    }
     pages: {
         login: {
             title: My Great Project

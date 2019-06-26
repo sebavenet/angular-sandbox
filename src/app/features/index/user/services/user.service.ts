@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { User } from '../models/user';
-import { SettingsService } from '../../../core/services/settings.service';
+import { SettingsService } from '../../../../core/services/settings.service';
 
 export const USERS: User[] = [
   {
