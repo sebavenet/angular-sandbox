@@ -12,6 +12,7 @@ import { UserService } from '../../services/user.service';
 })
 export class UserNewComponent implements OnInit {
   newForm: FormGroup;
+  public isFormSaved: boolean;
 
   bcItems = [
     { label: 'Home', routerLink: '/home', icon: 'pi pi-home' },
@@ -69,6 +70,7 @@ export class UserNewComponent implements OnInit {
     this.userService.createUser(this.newForm.value)
       .subscribe(
         resp => {
+          this.isFormSaved = true;
           this.notifier.notify('success', 'Operation successfully done!');
           this.router.navigate(['user', resp.id]);
         },

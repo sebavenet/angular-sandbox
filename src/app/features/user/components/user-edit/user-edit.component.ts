@@ -14,6 +14,7 @@ import { UserService } from '../../services/user.service';
 export class UserEditComponent implements OnInit {
   user: User;
   editForm: FormGroup;
+  public isFormSaved: boolean;
 
   bcItems = [
     { label: 'Home', routerLink: '/home', icon: 'pi pi-home' },
@@ -85,6 +86,7 @@ export class UserEditComponent implements OnInit {
     this.userService.updateUser(this.editForm.value)
       .subscribe(
         resp => {
+          this.isFormSaved = true;
           this.notifier.notify('success', 'Operation successfully done!');
           this.router.navigate(['user', resp.id]);
         },

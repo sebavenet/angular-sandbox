@@ -17,7 +17,7 @@
     },
     pages: {
         login: {
-            title: ANGULAR CLI STARTER
+            title: My Great Project
             subTitle: Authentication
             loginPLH: Username
             passwordPLH: Password
@@ -27,7 +27,7 @@
             }
         },
         register: {
-            title: ANGULAR CLI STARTER
+            title: My Great Project
             subTitle: Registration
             usernamePLH: Username
             passwordPLH: Password
